@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1>Login</h1>
 <% if(messages.error) { %>
     <%= messages.error %>
@@ -16,3 +17,23 @@
 <button type="submit">Login</button>
 </form>
 <a href="/register">Register</a> 
+=======
+<h1>Login</h1>
+<% if(messages.error) { %>
+    <%= messages.error %>
+<% } %>
+<form action="/login" method="POST">
+<div>
+    <label for="name">Email</label>
+    <input type="email" id="email" name="email"
+    required>
+</div>
+<div>
+    <label for="password">password</label>
+    <input type="password" id="password" name="password"
+    required>
+</div>
+<button type="submit">Login</button>
+</form>
+<a href="/register">Register</a> 
+>>>>>>> 1ab1f370631557f7f4f5f46d71291525ae9dd03b
