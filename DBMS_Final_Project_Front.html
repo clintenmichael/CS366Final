@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>Chicago Crime Map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
+
+    <style>
+        #map{
+            height: 98vh;
+            width: 200vh;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+</body>
+
+<script>
+
+    // $(function(){
+
+    
+        var map = L.map('map',{
+            center: [41.8781, -87.6298],
+            zoom: 15
+        });
+        
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var url; // set this to file with queries
+
+        // below is the general idea for getting the long and lat
+        // using .ajax to make http request
+
+        // $.ajax({
+        //     url: url,
+        //     type: "GET",
+        //     success: function(data){
+        //         console.log(result);
+        //     },
+        //     error: function(error){ 
+        //         console.log(error);
+        //     }
+        // });
+    // });
+
+    
+
+    
+
+</script>
+
+</html>
+
