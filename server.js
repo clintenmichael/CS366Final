@@ -15,6 +15,7 @@ var con = mysql.createConnection({
     password: "cw0965",
     database: "cs366-2197_woerishocm12"
   });
+
 con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
@@ -37,6 +38,7 @@ const methodOverride = require("method-override");
 const users = [];
 // WILL PROBABLY CHANGED TO JSX
 app.set("view-engine", "ejs");
+// app.set('view engine', 'html');
 
 //Initialize Middleware
 
@@ -77,6 +79,7 @@ app.get("/", checkAuthenticated, (req, res) => {
         sql,
         function(err, result) {
           if (err) throw err;
+          console.log(result)
           res.render("index.ejs", { name: req.user.email, data : result});
         }
       );
@@ -104,6 +107,17 @@ app.get("/data", checkAuthenticated, (req, res) => {
 //Route to the register page
 app.get("/register", checkNotAuthenticated, (req, res) => {
   res.render("register.ejs");
+});
+
+app.get("/test", (req, res) => {
+  var sql = "SELECT * FROM Crime LIMIT 100"
+  con.query(
+    sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("DBMS_Final_Project_Front.ejs", {data : result});
+    }
+  );
 });
 
 //POST METODS
