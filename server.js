@@ -89,6 +89,18 @@ app.get("/login", checkNotAuthenticated, (req, res) => {
   res.render("login.ejs");
 });
 
+app.get("/data", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM Crime WHERE crimeID = '" + req.query.id + "'"
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      console.log(result[0])
+      res.render("data.ejs", {data : result[0]});
+    }
+  );
+  
+});
+
 //Route to the register page
 app.get("/register", checkNotAuthenticated, (req, res) => {
   res.render("register.ejs");

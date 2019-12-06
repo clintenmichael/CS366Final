@@ -31,7 +31,7 @@ body {
 
 table {
   border-collapse: collapse;
-  width: 95%;
+  width: 100%;
 }
 
 th, td {
@@ -55,7 +55,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 /* Sidebar links */
 .sidebar a {
   display: block;
-  color: black;
+  color: white;
   padding: 16px;
   text-decoration: none;
 }
@@ -99,7 +99,7 @@ div.content {
 }
 
 .button {
-  background-color: #4CAF50; /* Green */
+  background-color: red;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -159,7 +159,7 @@ div.content {
                 <tbody>
                     <% data.forEach((row, index) => { %>
                         <tr>
-                            <td align = "center"><button><%= row.crimeID %></button></td>
+                            <td align = "center"><a href="/data?id=<%= row.crimeID%>"><%= row.crimeID %></td>
                             <td align = "center"><%= row.FBICode %></td>
                             <td align = "center"><%= row.type %></td>
                             <td align = "center"><%= row.Date %></td>
