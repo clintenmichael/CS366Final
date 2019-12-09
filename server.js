@@ -104,13 +104,19 @@ app.get("/data", checkAuthenticated, (req, res) => {
   
 });
 
+
+
 //Route to the register page
 app.get("/register", checkNotAuthenticated, (req, res) => {
   res.render("register.ejs");
 });
 
+
+// SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID LIMIT 100
 app.get("/test", (req, res) => {
-  var sql = "SELECT * FROM Crime LIMIT 100"
+    
+  var sql = "SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID LIMIT 100"
+    // "SELECT * FROM Crime LIMIT 100"
   con.query(
     sql,
     function(err, result) {
