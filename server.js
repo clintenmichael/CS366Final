@@ -112,7 +112,7 @@ app.get("/register", checkNotAuthenticated, (req, res) => {
 });
 
 
-// SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID LIMIT 100
+
 app.get("/test", (req, res) => {
     
   var sql = "SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID LIMIT 100"
@@ -124,7 +124,18 @@ app.get("/test", (req, res) => {
       res.render("DBMS_Final_Project_Front.ejs", {data : result});
     }
   );
+
+  // var sql1;
+  // con.query(
+  //   sql1,
+  //   function(err, result){
+  //     if(err) throw err;
+  //     res.render("DBMS_Final_Project_Front.ejs", {crime_records: '#crime-records'}) // yikes idk, is this how u do it?
+  //   }
+  
+  // )
 });
+
 
 //POST METODS
 app.post(
