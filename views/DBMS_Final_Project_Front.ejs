@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>Chicago Crime Map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <style>
+        #map{
+            height: 95.5vh;
+            width: 191.5vh;
+            position: fixed;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+
+        }
+
+        .nav-bar{
+            height:3.5vh;
+            width:191.5vh;
+            background-color: rgb(75, 74, 74);
+            overflow: hidden;
+            position:relative;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .nav-bar a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 1vh 8vh;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .nav-bar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* .nav-bar a.active {
+            background-color: rgb(74, 74, 228);
+            color: white;
+        } */
+    </style>
+</head>
+<body>
+
+    <div class="nav-bar">
+        <a class="active" href="#crime-records">Crime Records</a>
+        <a href="#law-profiles">Law Enforcement Profiles</a>
+        <a href="#criminal-profiles">Criminal Profiles</a>
+        
+    </div>
+    
+    <div id="map"></div>
+
+</body>
+
+<div id="mydiv" data-test=<%= data %> > </div>
+<script>
+
+
+    function htmlDecode(input){
+        var e = document.createElement('div');
+        e.innerHTML = input;
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+    
+  var myVar = JSON.parse(htmlDecode("<%= JSON.stringify(data) %>"));
+
+  console.log(myVar)
+
+    $(function(){
+    
+
+        var map = L.map('map',{
+            center: [41.8781, -87.6298],
+            zoom: 15
+        });
+        
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+
+        // don't forget to have data hold all entries, not just 100
+        
+        for (var i=0; i<myVar.length; i++){
+
+            
+            
+            
+            L.marker([myVar[i].latitude, myVar[i].longitude]).addTo(map) 
+                .bindPopup(
+                    "Date: " + myVar[i].Date + "<br>" +
+                    "City Block: " + myVar[i].cityBlock + "<br>"
+                )
+                .openPopup();
+        }
+        
+    });
+
+
+</script>
+
+
+</html>
+
