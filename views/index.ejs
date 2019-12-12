@@ -118,9 +118,11 @@ div.content {
 
 <!-- The sidebar -->
 <div class="sidebar">
-        <a class="active" href="/">Home</a>
-        <a href="/criminals">Criminals</a>
-        <a href="/officers">Officerst</a>
+  <a class="active" href="/">Home</a>
+  <a href="/cases">Cases</a>
+  <a href="/crimes">Crimes</a>
+  <a href="/criminals">Criminals</a>
+  <a href="/officers">Officers</a>
       </div>
       
 
@@ -133,51 +135,14 @@ div.content {
     
     
         <div class="topnav">
-                <a class="active" href="#home">Home</a>
-                <a href="#news">News</a>
-                <a href="#contact">Contact</a>
-                <a href="#about">About</a>
+          <a class="active" href="/">Home</a>
+          <a href="/cases">Cases</a>
+          <a href="/crimes">Crimes</a>
+          <a href="/criminals">Criminals</a>
+          <a href="/officers">Officers</a>
+        </div>
               </div>
 
-        <h1>Hello <%= name %></h1>
-    <div class="table-wrapper">
-        <% if (data.length > 0) {%>
-            <table class="table table-hovered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">FBICode</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Domestic</th>
-                        <th scope="col">Arrest</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% data.forEach((row, index) => { %>
-                        <tr>
-                            <td align = "center"><a href="/crime?id=<%= row.crimeID%>"><%= row.crimeID %></td>
-                            <td align = "center"><%= row.FBICode %></td>
-                            <td align = "center"><%= row.type %></td>
-                            <td align = "center"><%= row.Date %></td>
-                            <td align = "center"><%= row.description %></td>
-                            <td align = "center"><%= row.domestic %></td>
-                            <td align = "center"><%= row.arrest %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        <% } else { %>
-            <p class="text-center">No players found. Go <a href="/add" >here</a> to add players.</p>
-        <% } %>
-    </div>
-</div>
-<div>
-    <form action="/logout?_method=DELETE" method="POST">
-        <button type ="submit">Log Out</button>
-    </form>
-</div>
 </div>
 </body>
 </html>

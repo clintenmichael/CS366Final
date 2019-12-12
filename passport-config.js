@@ -6,7 +6,8 @@ var con = mysql.createConnection({
   host: "washington.uww.edu",
   user: "woerishocm12",
   password: "cw0965",
-  database: "cs366-2197_woerishocm12"
+  database: "cs366-2197_woerishocm12",
+
 });
 
 module.exports = function(passport) {

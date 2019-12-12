@@ -13,7 +13,8 @@ var con = mysql.createConnection({
     host: "washington.uww.edu",
     user: "woerishocm12",
     password: "cw0965",
-    database: "cs366-2197_woerishocm12"
+    database: "cs366-2197_woerishocm12",
+    multipleStatements: true
   });
 
 con.connect(function(err) {
@@ -74,7 +75,7 @@ app.get("/", checkAuthenticated, (req, res) => {
         message: "Could not connect to database please try again"
       });
     } else {
-      var sql = "SELECT * FROM Crime LIMIT 100"
+      var sql = "SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID LIMIT 100";
       con.query(
         sql,
         function(err, result) {
@@ -93,12 +94,28 @@ app.get("/login", checkNotAuthenticated, (req, res) => {
 
 
 app.get("/crime", checkAuthenticated, (req, res) => {
-  var sql = "SELECT * FROM Crime WHERE crimeID = '" + req.query.id + "'"
+  var sql = "SELECT * FROM Crime WHERE crimeID = '" + req.query.id + "';" +
+  "SELECT Criminal.*, Crime.crimeID " +
+  "FROM Criminal, Crime, Accused " +
+  "WHERE Criminal.ID = Accused.criminalID " +
+  "AND Crime.crimeID = Accused.crimeID " +
+  "AND Crime.crimeID = " + req.query.id 
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      console.log(result[0])
+      console.log(result)
       res.render("crime.ejs", {data : result[0]});
+    }
+  );
+  
+});
+
+app.get("/crimes", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM Crime LIMIT 1000"
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("crimes.ejs", {data : result});
     }
   );
   
@@ -120,7 +137,7 @@ app.get("/officer", checkAuthenticated, (req, res) => {
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      res.render("officers.ejs", {data : result});
+      res.render("officer.ejs", {data : result[0]});
     }
   );
   
@@ -155,7 +172,7 @@ app.get("/judges", checkAuthenticated, (req, res) => {
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      res.render("officers.ejs", {data : result});
+      res.render("judges.ejs", {data : result});
     }
   );
   
@@ -166,7 +183,7 @@ app.get("/judge", checkAuthenticated, (req, res) => {
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      res.render("officers.ejs", {data : result[0]});
+      res.render("judge.ejs", {data : result[0]});
     }
   );
   
