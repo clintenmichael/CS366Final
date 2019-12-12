@@ -103,8 +103,10 @@ app.get("/crime", checkAuthenticated, (req, res) => {
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      console.log(result)
-      res.render("crime.ejs", {data : result[0]});
+      var crime = result[0]
+      var accused = result[1]
+      console.log(result[0])
+      res.render("crime.ejs", {crime : crime, data : accused[0]});
     }
   );
   
