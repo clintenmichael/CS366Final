@@ -57,7 +57,7 @@ app.use(
   })
 );
 
-// First check if the user it authenticated
+// First check if the user is authenticated
 // If the user is authenticated create a new session
 app.use(passport.initialize());
 app.use(passport.session());
@@ -223,7 +223,7 @@ app.get("/register", checkNotAuthenticated, (req, res) => {
 
 
 
-app.get("/test", (req, res) => {
+app.get("/map", (req, res) => {
     
   var sql = "SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID LIMIT 100"
     // "SELECT * FROM Crime LIMIT 100"
@@ -231,19 +231,9 @@ app.get("/test", (req, res) => {
     sql,
     function(err, result) {
       if (err) throw err;
-      res.render("DBMS_Final_Project_Front.ejs", {data : result});
+      res.render("map.ejs", {data : result});
     }
   );
-
-  // var sql1;
-  // con.query(
-  //   sql1,
-  //   function(err, result){
-  //     if(err) throw err;
-  //     res.render("DBMS_Final_Project_Front.ejs", {crime_records: '#crime-records'}) // yikes idk, is this how u do it?
-  //   }
-  
-  // )
 });
 
 
@@ -307,7 +297,7 @@ function checkAuthenticated(req, res, next) {
   res.redirect("/login");
 }
 
-//If the user it authenticated we do not want to allow them to auth
+//If the user is authenticated we do not want to allow them to auth
 function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return res.redirect("/");
