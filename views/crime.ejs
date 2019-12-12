@@ -1,0 +1,35 @@
+<div class="table-wrapper">
+        <table class="table table-hovered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">FBICode</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Domestic</th>
+                    <th scope="col">Arrest</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td align = "center"><a href="/data?id=<%= data.crimeID%>"><%= data.crimeID %></td>
+                        <td align = "center"><%= data.FBICode %></td>
+                        <td align = "center"><%= data.type %></td>
+                        <td align = "center"><%= data.Date %></td>
+                        <td align = "center"><%= data.description %></td>
+                        <td align = "center"><%= data.domestic %></td>
+                        <td align = "center"><%= data.arrest %></td>
+                    </tr>
+            </tbody>
+        </table>
+</div>
+</div>
+<div>
+<form action="/logout?_method=DELETE" method="POST">
+    <button type ="submit">Log Out</button>
+</form>
+</div>
+</div>
+</body>
+</html>

@@ -79,7 +79,6 @@ app.get("/", checkAuthenticated, (req, res) => {
         sql,
         function(err, result) {
           if (err) throw err;
-          console.log(result)
           res.render("index.ejs", { name: req.user.email, data : result});
         }
       );
@@ -92,17 +91,109 @@ app.get("/login", checkNotAuthenticated, (req, res) => {
   res.render("login.ejs");
 });
 
-app.get("/data", checkAuthenticated, (req, res) => {
+
+app.get("/crime", checkAuthenticated, (req, res) => {
   var sql = "SELECT * FROM Crime WHERE crimeID = '" + req.query.id + "'"
   con.query(sql,
     function(err, result) {
       if (err) throw err;
       console.log(result[0])
-      res.render("data.ejs", {data : result[0]});
+      res.render("crime.ejs", {data : result[0]});
     }
   );
   
 });
+
+app.get("/officers", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM LawEnforcement WHERE title != 'Judge'"
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("officers.ejs", {data : result});
+    }
+  );
+  
+});
+
+app.get("/officer", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM LawEnforcement WHERE ID = '" + req.query.id + "'"
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("officers.ejs", {data : result});
+    }
+  );
+  
+});
+
+app.get("/criminals", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM Criminal LIMIT 1000";
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("criminals.ejs", {data : result});
+    }
+  );
+  
+});
+
+
+app.get("/criminal", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM Criminal WHERE ID = '" + req.query.id + "'"
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      console.log(result)
+      res.render("criminal.ejs", {data : result[0]});
+    }
+  );
+  
+});
+
+app.get("/judges", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM LawEnforcement WHERE title = 'Judge'"
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("officers.ejs", {data : result});
+    }
+  );
+  
+});
+
+app.get("/judge", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM LawEnforcement WHERE ID = '" + req.query.id + "'"
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("officers.ejs", {data : result[0]});
+    }
+  );
+  
+});
+
+app.get("/cases", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM Cases"
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("cases.ejs", {data : result});
+    }
+  );
+  
+});
+
+app.get("/case", checkAuthenticated, (req, res) => {
+  var sql = "SELECT * FROM Cases WHERE caseID = '" + req.query.id + "'"
+  con.query(sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("case.ejs", {data : result[0]});
+    }
+  );
+  
+});
+
 
 
 

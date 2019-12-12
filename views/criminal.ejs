@@ -1,0 +1,46 @@
+<div class="table-wrapper">
+        <table class="table table-hovered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">SSN</th>
+                    <th scope="col">Race</th>
+                    <th scope="col">Occupation</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">State</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td align = "center"><a href="/criminal?id=<%= data.ID%>"><%= data.ID.toString().padStart(6, "0") %></td>
+                        <td align = "center"><%= data.firstName %></td>
+                        <td align = "center"><%= data.lastName %></td>
+                        <td align = "center"><%= data.gender %></td>
+                        <td align = "center"><%= data.ssn %></td>
+                        <td align = "center"><%= data.race %></td>
+                        <td align = "center"><%= data.occupation %></td>
+                        <td align = "center"><%= data.address %></td>
+                        <td align = "center"><%= data.state %></td>
+                        <td align = "center"><%= data.city %></td>
+                        <td align = "center"><%= data.company %></td>
+                        <td align = "center"><%= data.email %></td>
+                        <td align = "center"><%= data.phone %></td>
+
+                    </tr>
+            </tbody>
+        </table>
+</div>
+</div>
+<div>
+<form action="/logout?_method=DELETE" method="POST">
+    <button type ="submit">Log Out</button>
+</form>
+</div>
+</div>

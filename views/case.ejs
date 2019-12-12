@@ -1,0 +1,28 @@
+<div class="table-wrapper">
+        <table class="table table-hovered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Court Date</th>
+                    <th scope="col">Room Number</th>
+                    <th scope="col">Court Time</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td align = "center"><a href="/case?id=<%= data.ID%>"><%= data.caseID.toString().padStart(6, "0") %></td>
+                        <td align = "center"><%= data.courtDate %></td>
+                        <td align = "center"><%= data.roomNumber %></td>
+                        <td align = "center"><%= data.courtTime %></td>
+                    </tr>
+            </tbody>
+        </table>
+</div>
+</div>
+<div>
+<form action="/logout?_method=DELETE" method="POST">
+    <button type ="submit">Log Out</button>
+</form>
+</div>
+</div>

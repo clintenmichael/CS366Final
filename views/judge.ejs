@@ -1,0 +1,31 @@
+<div class="table-wrapper">
+    <table class="table table-hovered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Title</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td align = "center"><a href="/officer?id=<%= data.crimeID%>"><%= data.ID.toString().padStart(6, "0") %></td>
+                    <td align = "center"><%= data.firstName %></td>
+                    <td align = "center"><%= data.lastName %></td>
+                    <td align = "center"><%= data.title %></td>
+                    <td align = "center"><%= data.email %></td>
+                    <td align = "center"><%= data.phone %></td>
+                </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+<div>
+<form action="/logout?_method=DELETE" method="POST">
+<button type ="submit">Log Out</button>
+</form>
+</div>
+</div>
