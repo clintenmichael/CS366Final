@@ -226,7 +226,8 @@ app.get("/register", checkNotAuthenticated, (req, res) => {
 app.get("/map", (req, res) => {
     
   var sql = "SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID LIMIT 100"
-    // "SELECT * FROM Crime LIMIT 100"
+  // var sql = "SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID"
+
   con.query(
     sql,
     function(err, result) {
