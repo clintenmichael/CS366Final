@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <%- include('partials/test') %>
+    <!-- <%- include('partials/test') %> -->
     <%- include('style') %>
 
     <% if (crime.length > 0) {%>
@@ -40,6 +40,7 @@
             class="table table-hovered" 
             id="crimes_table"
         > -->
+        <caption>Crime Info</caption>
         <table 
             data-toggle="table"
             class="table table-hovered" 
@@ -74,9 +75,11 @@
         <p class="text-center">No crimes found. Go <a href="/add" >here</a> to add a crime.</p>
     <% } %>
 
+    <br>
+    <br>
     <%- include('criminal.ejs' , {data : data});%> 
 
-    <div id=mini-map>
+    <div id="mini-map">
         <%- include('map.ejs');%>
     </div>
 
