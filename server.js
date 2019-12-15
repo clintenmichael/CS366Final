@@ -93,19 +93,21 @@ app.get("/login", checkNotAuthenticated, (req, res) => {
 });
 
 
+
 app.get("/crime", checkAuthenticated, (req, res) => {
   var sql = "SELECT * FROM Crime WHERE crimeID = '" + req.query.id + "';" +
-  "SELECT Criminal.*, Crime.crimeID " +
+  "SELECT Criminal.*, Crime.crimeID, CrimeLocation.locationID, CityLocation.*" +
   "FROM Criminal, Crime, Accused " +
   "WHERE Criminal.ID = Accused.criminalID " +
   "AND Crime.crimeID = Accused.crimeID " +
   "AND Crime.crimeID = " + req.query.id 
+  // "JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID"
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      var crime = result[0]
-      var accused = result[1]
-      console.log(result[0])
+      var crime = result[0];
+      var accused = result[1];
+      console.log(result[0]);
       res.render("crime.ejs", {crime : crime, data : accused[0]});
     }
   );

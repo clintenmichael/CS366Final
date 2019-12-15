@@ -55,7 +55,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td align = "center"><a href="/criminal?id=<%= data.ID%>"><%= data.ID.toString().padStart(6, "0") %></td>
+                    <!-- have it so if id is clicked nothing will happen -->
+                    <td align = "center"><a href="/criminal?id=<%= data.ID%>" onclick="return false;"><%= data.ID.toString().padStart(6, "0") %></td>
                     <td align = "center"><%= data.firstName %></td>
                     <td align = "center"><%= data.lastName %></td>
                     <td align = "center"><%= data.gender %></td>
