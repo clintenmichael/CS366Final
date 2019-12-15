@@ -93,24 +93,43 @@ app.get("/login", checkNotAuthenticated, (req, res) => {
 });
 
 
-
 app.get("/crime", checkAuthenticated, (req, res) => {
   var sql = "SELECT * FROM Crime WHERE crimeID = '" + req.query.id + "';" +
-  "SELECT Criminal.*, Crime.crimeID, CrimeLocation.locationID, CityLocation.*" +
+  "SELECT Criminal.*, Crime.crimeID " +
   "FROM Criminal, Crime, Accused " +
   "WHERE Criminal.ID = Accused.criminalID " +
   "AND Crime.crimeID = Accused.crimeID " +
-  "AND Crime.crimeID = " + req.query.id 
-  // "JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID"
+  "AND Crime.crimeID = '" + req.query.id + "';" +
+  "SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID WHERE Crime.crimeID = " + req.query.id; 
   con.query(sql,
     function(err, result) {
       if (err) throw err;
       var crime = result[0];
       var accused = result[1];
-      console.log(result[0]);
-      res.render("crime.ejs", {crime : crime, data : accused[0]});
+      var location = result[2];
+      console.log(result)
+      res.render("crime.ejs", {crime : crime, data : accused[0], location : location});
     }
   );
+
+  // var location = "SELECT CityLocation.locationID FROM CityLocation WHERE Crime.crimeID = " + req.query.id + " = CrimeLocation.crimeID";
+  // console.log(location);
+
+  // var sql = "SELECT * FROM Crime WHERE crimeID = '" + req.query.id + "';" +
+  // "SELECT Criminal.*, Crime.crimeID " +
+  // "FROM Criminal, Crime, Accused " +
+  // "WHERE Criminal.ID = Accused.criminalID " +
+  // "AND Crime.crimeID = Accused.crimeID " +
+  // "AND Crime.crimeID = " + req.query.id
+  // con.query(sql,
+  //   function(err, result) {
+  //     if (err) throw err;
+  //     var crime = result[0];
+  //     var accused = result[1];
+  //     console.log(result)
+  //     res.render("crime.ejs", {crime : crime, data : accused[0]});
+  //   }
+  // );
   
 });
 
