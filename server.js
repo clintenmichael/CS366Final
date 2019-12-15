@@ -270,6 +270,56 @@ app.post(
   })
 );
 
+
+ app.post("/deleteCrime", checkAuthenticated, (req, res) => {
+  var sql = "DELETE FROM Crime WHERE crimeID = '" + req.query.id + "';" + 
+  "DELETE FROM CrimeLocation WHERE crimeID = '" + req.query.id + "';" + 
+  "DELETE FROM Accused WHERE crimeID = '" + req.query.id + "';" + 
+  "DELETE FROM COURT WHERE crimeID = '" + req.query.id + "';" + 
+  "DELETE FROM RespondTo WHERE crimeID = '" + req.query.id + "';"
+  con.query(
+    sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("map.ejs");
+    });
+ });
+
+app.get("/report", checkAuthenticated, async (req, res) => {
+  res.render("create.ejs");
+
+});
+
+app.post("/report", checkAuthenticated, async (req, res) => {
+  var params = req.body.Description + "\n" +
+  req.body.FBICode + "\n" +
+  req.body.Type + "\n" +
+  req.body.Date + "\n" +
+  req.body.Domestic + "\n" +
+  req.body.Arrest + "\n" +
+  req.body.FirstName + "\n" +
+  req.body.LastName + "\n" +
+  req.body.Gender + "\n" +
+  req.body.SSN + "\n" +
+  req.body.Race + "\n" +
+  req.body.Occupation + "\n" +
+  req.body.Address + "\n" +
+  req.body.State + "\n" +
+  req.body.City + "\n" +
+  req.body.Company + "\n" +
+  req.body.Email + "\n" +
+  req.body.Phone + "\n" +
+  req.body.Latitude + "\n" +
+  req.body.Longitude + "\n" +
+  req.body.PoliceDistrict + "\n" +
+  req.body.locationDescription + "\n" +
+  req.body.CityBlock + "\n" +
+  req.body.ZipCode + "\n" +
+  console.log(params)
+  res.render("index.ejs");
+
+});
+
 app.post("/register", checkNotAuthenticated, async (req, res) => {
   var hashedPassword;
   try {
