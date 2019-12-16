@@ -9,3 +9,7 @@ npm install (Bcrypt may fail to install on some computers. This is the fault of 
 
 
 npm run devstart (Server is running now on localhost:5000)
+
+
+An email you can use for authentication is nbicker0@chicagoPD.com
+password: 1234
