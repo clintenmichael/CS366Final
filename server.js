@@ -50,7 +50,7 @@ app.use( express.static( "public" ) );
 app.use(flash());
 app.use(
   session({
-    secret: "secret", //no idea wtf this is but doing this is super insecure but it works so fuck it
+    secret: "secret", 
     //do not want to resave session variables if nothing has changed
     resave: true,
     saveUninitialized: true
