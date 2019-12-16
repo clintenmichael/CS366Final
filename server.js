@@ -111,7 +111,6 @@ app.get("/crime", checkAuthenticated, (req, res) => {
       var location = result[2];
       var officer = result[3];
       var cases = result[4];
-      console.log(result)
       res.render("crime.ejs", {crime : crime, data : accused, location : location, officer : officer, cases : cases});
     }
   );
@@ -119,11 +118,11 @@ app.get("/crime", checkAuthenticated, (req, res) => {
 });
 
 app.get("/crimes", checkAuthenticated, (req, res) => {
-  var sql = "SELECT * FROM Crime LIMIT 1000"
+  var sql = "CALL `GetCrimes`();"
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      res.render("crimes.ejs", {data : result});
+      res.render("crimes.ejs", {data : result[0]});
     }
   );
   
@@ -153,11 +152,11 @@ app.get("/officer", checkAuthenticated, (req, res) => {
 });
 
 app.get("/criminals", checkAuthenticated, (req, res) => {
-  var sql = "SELECT * FROM Criminal LIMIT 1000";
+  var sql = "CALL `GetCriminals`();";
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      res.render("criminals.ejs", {data : result});
+      res.render("criminals.ejs", {data : result[0]});
     }
   );
   
@@ -170,7 +169,6 @@ app.get("/criminal", checkAuthenticated, (req, res) => {
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      console.log(result)
       res.render("criminal.ejs", {data : result[0], crime : result[1]});
     }
   );
@@ -189,7 +187,7 @@ app.get("/judges", checkAuthenticated, (req, res) => {
 });
 
 app.get("/judge", checkAuthenticated, (req, res) => {
-  var sql = "SELECT * FROM LawEnforcement WHERE ID = '" + req.query.id + "'"
+  var sql = "SELECT * FROM LawEnforcement WHERE ID = '" + req.query.id + "';"
   con.query(sql,
     function(err, result) {
       if (err) throw err;
@@ -200,11 +198,11 @@ app.get("/judge", checkAuthenticated, (req, res) => {
 });
 
 app.get("/cases", checkAuthenticated, (req, res) => {
-  var sql = "SELECT * FROM Cases"
+  var sql = "CALL `GetCases`();"
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      res.render("cases.ejs", {data : result});
+      res.render("cases.ejs", {data : result[0]});
     }
   );
   
@@ -217,7 +215,6 @@ app.get("/case", checkAuthenticated, (req, res) => {
     function(err, result) {
       if (err) throw err;
       console.log("below");
-      console.log(result);
       res.render("case.ejs", {data : result[0], crime : result[1]});
     }
   );
@@ -226,11 +223,6 @@ app.get("/case", checkAuthenticated, (req, res) => {
 
 
 
-
-//Route to the register page
-app.get("/register", checkNotAuthenticated, (req, res) => {
-  res.render("register.ejs");
-});
 
 
 
@@ -271,7 +263,7 @@ app.post(
     sql,
     function(err, result) {
       if (err) throw err;
-      res.render("map.ejs");
+      res.render("index.ejs");
     });
  });
 
@@ -281,32 +273,22 @@ app.get("/report", checkAuthenticated, async (req, res) => {
 });
 
 app.post("/report", checkAuthenticated, async (req, res) => {
-  var params = req.body.Description + "\n" +
-  req.body.FBICode + "\n" +
-  req.body.Type + "\n" +
-  req.body.Date + "\n" +
-  req.body.Domestic + "\n" +
-  req.body.Arrest + "\n" +
-  req.body.FirstName + "\n" +
-  req.body.LastName + "\n" +
-  req.body.Gender + "\n" +
-  req.body.SSN + "\n" +
-  req.body.Race + "\n" +
-  req.body.Occupation + "\n" +
-  req.body.Address + "\n" +
-  req.body.State + "\n" +
-  req.body.City + "\n" +
-  req.body.Company + "\n" +
-  req.body.Email + "\n" +
-  req.body.Phone + "\n" +
-  req.body.Latitude + "\n" +
-  req.body.Longitude + "\n" +
-  req.body.PoliceDistrict + "\n" +
-  req.body.locationDescription + "\n" +
-  req.body.CityBlock + "\n" +
-  req.body.ZipCode + "\n" +
-  console.log(params)
-  res.render("index.ejs");
+  var crimeParams = "'" + req.body.Description + "','" + req.body.FBICode + "','" + req.body.Type + "','" + req.body.Date + "','" +req.body.Domestic + "','" + req.body.Arrest + "'" 
+  
+  var criminalParams = "'" + req.body.FirstName + "', '" + req.body.LastName + "', '" +req.body.Gender + "', '" + req.body.SSN + "', '" +req.body.Race + "', '" + req.body.Occupation + "' ,'" + req.body.Address + "' ,'" + req.body.State + "' ,'" + req.body.City + "' ,'" + req.body.Company + "' ,'" +req.body.Email + "' ,'" + req.body.Phone + "'"
+  
+  var locationParams = "'" + req.body.Latitude + "', '" + req.body.Longitude + "', '" + req.body.PoliceDistrict + "' ,'" + req.body.locationDescription + "' ,'" + req.body.CityBlock + "' ,'" +req.body.ZipCode + "'"
+
+  var sql = "INSERT INTO Crime (description, FBICode, type, Date, domestic, arrest) VALUES (" + crimeParams + "); " +
+  "INSERT INTO Criminal (firstName, lastName, gender, ssn, race, occupation, address, state, city, company, email, phone) VALUES (" + criminalParams + "); " +
+  "INSERT INTO CityLocation (latitude, longitude, policeDistrict, description, cityBlock, zipCode) VALUES (" + locationParams + ");" 
+
+  con.query(
+    sql,
+    function(err, result) {
+      if (err) throw err;
+      res.render("index.ejs");
+    });
 
 });
 

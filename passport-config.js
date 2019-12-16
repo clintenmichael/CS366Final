@@ -36,9 +36,12 @@ module.exports = function(passport) {
           }
           console.log("CHECKING PASSWORD");
 
+          hashedPassword = await bcrypt.hash(req.body.password, 10);
+          console.log(hashedPassword)
+
           const match = await bcrypt.compare(password, row[0].password);
 
-          if (true) {
+          if (match) {
             console.log("PASSWORD CORRECT");
             console.log("ROW: " + row[0].email);
             return done(null, row[0]);
