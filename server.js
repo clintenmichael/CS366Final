@@ -100,36 +100,21 @@ app.get("/crime", checkAuthenticated, (req, res) => {
   "WHERE Criminal.ID = Accused.criminalID " +
   "AND Crime.crimeID = Accused.crimeID " +
   "AND Crime.crimeID = '" + req.query.id + "';" +
-  "SELECT Crime.*, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID WHERE Crime.crimeID = " + req.query.id; 
+  "SELECT Crime.crimeID, CrimeLocation.locationID, CityLocation.* FROM `Crime` JOIN CrimeLocation ON Crime.crimeID = CrimeLocation.crimeID JOIN CityLocation ON CrimeLocation.locationID = CityLocation.locationID WHERE Crime.crimeID = '" + req.query.id + "';" +
+  "SELECT Crime.crimeID, RespondTo.lawID, LawEnforcement.* FROM Crime JOIN RespondTo ON Crime.crimeID = RespondTo.crimeID JOIN LawEnforcement ON RespondTo.lawID = LawEnforcement.ID WHERE Crime.crimeID = '" + req.query.id + "';" +
+  "SELECT Crime.crimeID, Court.caseID, Cases.* FROM Crime JOIN Court ON Crime.crimeID = Court.crimeID JOIN Cases ON Court.caseID = Cases.caseID WHERE Crime.crimeID = " + req.query.id;
   con.query(sql,
     function(err, result) {
       if (err) throw err;
       var crime = result[0];
       var accused = result[1];
       var location = result[2];
+      var officer = result[3];
+      var cases = result[4];
       console.log(result)
-      res.render("crime.ejs", {crime : crime, data : accused[0], location : location});
+      res.render("crime.ejs", {crime : crime, data : accused, location : location, officer : officer, cases : cases});
     }
   );
-
-  // var location = "SELECT CityLocation.locationID FROM CityLocation WHERE Crime.crimeID = " + req.query.id + " = CrimeLocation.crimeID";
-  // console.log(location);
-
-  // var sql = "SELECT * FROM Crime WHERE crimeID = '" + req.query.id + "';" +
-  // "SELECT Criminal.*, Crime.crimeID " +
-  // "FROM Criminal, Crime, Accused " +
-  // "WHERE Criminal.ID = Accused.criminalID " +
-  // "AND Crime.crimeID = Accused.crimeID " +
-  // "AND Crime.crimeID = " + req.query.id
-  // con.query(sql,
-  //   function(err, result) {
-  //     if (err) throw err;
-  //     var crime = result[0];
-  //     var accused = result[1];
-  //     console.log(result)
-  //     res.render("crime.ejs", {crime : crime, data : accused[0]});
-  //   }
-  // );
   
 });
 
@@ -156,11 +141,12 @@ app.get("/officers", checkAuthenticated, (req, res) => {
 });
 
 app.get("/officer", checkAuthenticated, (req, res) => {
-  var sql = "SELECT * FROM LawEnforcement WHERE ID = '" + req.query.id + "'"
+  var sql = "SELECT * FROM LawEnforcement WHERE ID = " + req.query.id + ";" +
+  "SELECT LawEnforcement.ID, RespondTo.crimeID, Crime.* FROM LawEnforcement JOIN RespondTo ON LawEnforcement.ID = RespondTo.lawID JOIN Crime ON RespondTo.crimeID = Crime.crimeID WHERE LawEnforcement.ID = '" + req.query.id + "'";
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      res.render("officer.ejs", {data : result[0]});
+      res.render("officer.ejs", {data : result[0], crime : result[1]});
     }
   );
   
@@ -179,12 +165,13 @@ app.get("/criminals", checkAuthenticated, (req, res) => {
 
 
 app.get("/criminal", checkAuthenticated, (req, res) => {
-  var sql = "SELECT * FROM Criminal WHERE ID = '" + req.query.id + "'"
+  var sql = "SELECT * FROM Criminal WHERE ID = " + req.query.id + ";" +
+  "SELECT Criminal.ID, Accused.crimeID, Crime.* FROM Criminal JOIN Accused ON Criminal.ID = Accused.criminalID JOIN Crime ON Accused.crimeID = Crime.crimeID WHERE Criminal.ID = '" + req.query.id + "'";
   con.query(sql,
     function(err, result) {
       if (err) throw err;
       console.log(result)
-      res.render("criminal.ejs", {data : result[0]});
+      res.render("criminal.ejs", {data : result[0], crime : result[1]});
     }
   );
   
@@ -224,11 +211,14 @@ app.get("/cases", checkAuthenticated, (req, res) => {
 });
 
 app.get("/case", checkAuthenticated, (req, res) => {
-  var sql = "SELECT * FROM Cases WHERE caseID = '" + req.query.id + "'"
+  var sql = "SELECT * FROM Cases WHERE caseID = '" + req.query.id + "'" + ";" +
+  "SELECT Cases.caseID, Court.crimeID, Crime.* FROM Cases JOIN Court ON Cases.caseID = Court.caseID JOIN Crime ON Court.crimeID = Crime.crimeID WHERE Cases.caseID = '" + req.query.id + "'";
   con.query(sql,
     function(err, result) {
       if (err) throw err;
-      res.render("case.ejs", {data : result[0]});
+      console.log("below");
+      console.log(result);
+      res.render("case.ejs", {data : result[0], crime : result[1]});
     }
   );
   

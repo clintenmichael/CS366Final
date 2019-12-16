@@ -54,22 +54,60 @@
                 </tr>
             </thead>
             <tbody>
+                
+            <% data.forEach((row, index) => { %>
                 <tr>
-                    <!-- have it so if id is clicked nothing will happen -->
-                    <td align = "center"><a href="/criminal?id=<%= data.ID%>" onclick="return false;"><%= data.ID.toString().padStart(6, "0") %></td>
-                    <td align = "center"><%= data.firstName %></td>
-                    <td align = "center"><%= data.lastName %></td>
-                    <td align = "center"><%= data.gender %></td>
-                    <td align = "center"><%= data.ssn %></td>
-                    <td align = "center"><%= data.race %></td>
-                    <td align = "center"><%= data.occupation %></td>
-                    <td align = "center"><%= data.address %></td>
-                    <td align = "center"><%= data.state %></td>
-                    <td align = "center"><%= data.city %></td>
-                    <td align = "center"><%= data.company %></td>
-                    <td align = "center"><%= data.email %></td>
-                    <td align = "center"><%= data.phone %></td>
+                    <td align = "center"><%= row.ID.toString().padStart(6, "0") %></td>
+                    <td align = "center"><%= row.firstName %></td>
+                    <td align = "center"><%= row.lastName %></td>
+                    <td align = "center"><%= row.gender %></td>
+                    <td align = "center"><%= row.ssn %></td>
+                    <td align = "center"><%= row.race %></td>
+                    <td align = "center"><%= row.occupation %></td>
+                    <td align = "center"><%= row.address %></td>
+                    <td align = "center"><%= row.state %></td>
+                    <td align = "center"><%= row.city %></td>
+                    <td align = "center"><%= row.company %></td>
+                    <td align = "center"><%= row.email %></td>
+                    <td align = "center"><%= row.phone %></td>
+
                 </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <caption>Crime Info</caption>
+        <table 
+            data-toggle="table"
+            class="table table-hovered" 
+            id="crimes_table"
+        >
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">FBICode</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Domestic</th>
+                    <th scope="col">Arrest</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% crime.forEach((row, index) => { %>
+                    <tr>
+                        <td align = "center"><%= row.crimeID %></td>
+                        <td align = "center"><%= row.FBICode %></td>
+                        <td align = "center"><%= row.type %></td>
+                        <td align = "center"><%= row.Date %></td>
+                        <td align = "center"><%= row.description %></td>
+                        <td align = "center"><%= row.domestic %></td>
+                        <td align = "center"><%= row.arrest %></td>
+                    </tr>
+                <% }) %>
             </tbody>
         </table>
     </div>
