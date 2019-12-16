@@ -11,4 +11,4 @@ npm install (Bcrypt may fail to install on some computers. This is the fault of 
 		npm install --g --production windows-build-tools)
 
 
-npm run devstart (Server is running now on localhost:5000)
+npm run start (Server is running now on localhost:5000)
